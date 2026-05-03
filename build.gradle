@@ -8,7 +8,10 @@ version = '1.7.2'
 
 defaultTasks 'clean', 'shadowJar'
 
-sourceCompatibility = JavaVersion.VERSION_17
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
 
 repositories {
     mavenCentral()
@@ -18,7 +21,6 @@ repositories {
     maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
     maven { url = 'https://oss.sonatype.org/content/repositories/snapshots' }
     maven { url = 'https://repo.velocitypowered.com/snapshots/' }
-
     maven { url = 'https://repo.extendedclip.com/content/repositories/placeholderapi/' }
 }
 
@@ -33,9 +35,7 @@ dependencies {
     compileOnly 'org.spigotmc:spigot-api:1.21-R0.1-SNAPSHOT'
     compileOnly 'net.md-5:bungeecord-api:1.21-R0.1-SNAPSHOT'
     compileOnly 'com.velocitypowered:velocity-api:3.3.0-SNAPSHOT'
-
     compileOnly 'me.clip:placeholderapi:2.11.6'
-
     compileOnly 'org.jetbrains.kotlin:kotlin-stdlib:2.0.0'
     compileOnly 'com.atlassian:onetime:2.1.1'
     compileOnly 'org.apache.logging.log4j:log4j-core:2.23.1'
