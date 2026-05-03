@@ -8,26 +8,16 @@ public class Version {
     public static Version getInstance() { return instance; }
 
     private Version() {
-        // getBukkitVersion() returns e.g. "1.21.0-R0.1-SNAPSHOT" on old versions
-        // but "26.1.2-R0.1-SNAPSHOT" on new Mojang versioning (1.20.5+ Paper/Purpur).
-        // In the new scheme the major is not "1", so we fall back to getMinecraftVersion()
-        // which always returns the actual MC version string e.g. "1.21.4" or "26.1.2".
-        String rawVersion = Bukkit.getServer().getBukkitVersion().split("-")[0]; // e.g. "26.1.2" or "1.21.0"
-
-        // If the major version isn't "1", getBukkitVersion() is using the new Mojang
-        // versioning scheme. In that case use getMinecraftVersion() which reliably
-        // returns the MC version string on Paper/Purpur (added 2020, always available here).
-        if (!rawVersion.startsWith("1.")) {
-            try {
-                rawVersion = Bukkit.getServer().getMinecraftVersion(); // e.g. "26.1.2"
-            } catch (Exception ignored) {}
-        }
+        // getBukkitVersion() returns e.g. "1.21.0-R0.1-SNAPSHOT" or "26.1.2-R0.1-SNAPSHOT"
+        // Either way, splitting on "-" and taking index 0 gives us the raw MC version string,
+        // which maps directly to our enum names after replacing "." with "_" and prepending "v".
+        String rawVersion = Bukkit.getServer().getBukkitVersion().split("-")[0];
 
         try {
             this.serverVersion = ServerVersion.valueOf("v" + rawVersion.replaceAll("\\.", "_"));
         } catch (Exception ignored) {
-            // Version string didn't match any known enum entry.
-            // Find the highest known version and use that as a safe fallback.
+            // Version string didn't match any known enum entry (e.g. a future version).
+            // Fall back to the highest known version so above() checks still behave correctly.
             ServerVersion latest = ServerVersion.values()[0];
             for (ServerVersion sv : ServerVersion.values()) {
                 if (sv.getVersionId() > latest.getVersionId()) {
