@@ -35,5 +35,5 @@ jobs:
         with:
           # Use the version extracted in the previous step
           name: artifact
-          path: build/libs/*.jar
+          path: *.jar
 
