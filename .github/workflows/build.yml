@@ -1,5 +1,4 @@
 name: Install, Build & Test
-
 on:
   push:
     branches:
@@ -35,5 +34,5 @@ jobs:
         with:
           # Use the version extracted in the previous step
           name: artifact
-          path: *.jar
+          path: build/libs/*.jar
 
