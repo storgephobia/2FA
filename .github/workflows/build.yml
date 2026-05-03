@@ -30,4 +30,10 @@ jobs:
 
       - name: Build with Gradle
         run: gradle :clean :build
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          # Use the version extracted in the previous step
+          name: artifact
+          path: build/libs/*.jar
 
